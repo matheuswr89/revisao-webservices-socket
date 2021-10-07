@@ -8,7 +8,7 @@ Como revisão e atividade de contextualização para iniciarmos a disciplina, vo
 
 - O tamanho médio de caracteres das palavras
 
-##Como usar
+Como usar
 
 1. Baixe o projeto
 
