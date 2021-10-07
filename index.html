@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <input type="text" width="100" />
+    <button onclick="enviar()">Enviar</button>
+    <div></div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      let input = document.getElementsByTagName("input")[0];
+      function enviar() {
+        let socket = io();
+        socket.emit("send", { input: input.value, id: socket.id });
+        socket.on("receive", function (data) {
+          addMessage(data.message);
+        });
+        socket.on("error", console.error.bind(console));
+        socket.on("message", console.log.bind(console));
+      }
+
+      function addMessage(message) {
+        let div = document.getElementsByTagName("div")[0];
+        div.innerHTML = message;
+      }
+    </script>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+  </body>
+</html>
