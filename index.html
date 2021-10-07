@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <input type="text" width="100" />
-    <button onclick="enviar()">Enviar</button>
-    <div></div>
+    <title>Revisão</title>
+    <style>
+      textarea {
+        width: 200px;
+        height: 100px;
+      }
+    </style>
     <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <textarea></textarea>
+    <button>Enviar</button>
+    <div></div>
     <script>
-      let input = document.getElementsByTagName("input")[0];
-      function enviar() {
+      let textarea = document.getElementsByTagName("textarea")[0];
+      let button = document.getElementsByTagName("button")[0];
+      button.onclick = function enviar() {
         let socket = io();
-        socket.emit("send", { input: input.value, id: socket.id });
-        socket.on("receive", function (data) {
+        //envia o input do usuário
+        socket.emit("send", { input: textarea.value, id: socket.id });
+        //recebe o resultado
+        socket.on("result", function (data) {
           addMessage(data.message);
         });
         socket.on("error", console.error.bind(console));
         socket.on("message", console.log.bind(console));
-      }
+      };
 
       function addMessage(message) {
         let div = document.getElementsByTagName("div")[0];
         div.innerHTML = message;
       }
     </script>
-  </head>
-  <body>
-    <ul id="messages"></ul>
   </body>
 </html>
